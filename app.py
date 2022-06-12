@@ -1,22 +1,5 @@
 import os
-#import rook
-try:
-    from uwsgidecorators import postfork
-
-     # Run Rookout after the fork
-    @postfork
-    def run_rookout():
-        import rook
-        rook.start(
-        token='28e0b85844c312098fa3e98ceddf8b1794ffedef99ac53c6a67f3e9b3c578c81'
-        )
-except ImportError:
-# If there's no uWSGI, run Rookout normally
-    import rook
-    rook.start(
-    token='28e0b85844c312098fa3e98ceddf8b1794ffedef99ac53c6a67f3e9b3c578c81'
-    )
-
+import rook
 from datetime import timedelta
 
 from flask import Flask, session
@@ -111,10 +94,9 @@ def server_error(e):
     raise e
 
 if __name__ == '__main__':
-    #rook.start(
-    #token='28e0b85844c312098fa3e98ceddf8b1794ffedef99ac53c6a67f3e9b3c578c81',
-   # labels={"env":"dev"}
-    #)
+    rook.start(token='28e0b85844c312098fa3e98ceddf8b1794ffedef99ac53c6a67f3e9b3c578c81',
+               labels={"env": "dev"}) # Optional,see Labels page below Projects
+    # Your program starts here :)
     app.run(
         port=int(os.environ.get('PORT', DEFAULT_PORT)),
         threaded=True
